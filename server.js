@@ -2,6 +2,9 @@ const express = require("express");
 // const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 const app = express();
 
 var corsOptions = {
@@ -32,13 +35,16 @@ db.mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to store application." });
 });
 
 require("./app/routes/turorial.routes")(app);
+require("./app/routes/user.routes")(app);
 
+const authRoutes = require("./app/routes/auth.routes");
+app.use("/api/auth", authRoutes);
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8082;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
