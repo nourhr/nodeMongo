@@ -1,4 +1,6 @@
 const express = require("express");
+
+
 // const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
 
@@ -43,8 +45,11 @@ require("./app/routes/user.routes")(app);
 
 const authRoutes = require("./app/routes/auth.routes");
 app.use("/api/auth", authRoutes);
+
 // set port, listen for requests
-const PORT = process.env.PORT || 8082;
+const PORT = process.env.PORT || 8080;
+const eurekaHelper = require('./app/config/eureka-helper');
+eurekaHelper.registerWithEureka('user-service', PORT);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
